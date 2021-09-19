@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" src="{{ url_for('static', filename='css/styles.css') }}"/>
+
+    <title>{% block title %}learnINsoft{% endblock %}</title>
+</head>
+<body>
+    {% block content%}
+    <h1>Initialising the application, Coming soon. </h1>
+    {% endblock %}
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/index.js') }}"></script>
+
+</body>
+</html>
