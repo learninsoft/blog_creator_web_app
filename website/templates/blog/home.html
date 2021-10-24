@@ -1,4 +1,13 @@
 {% extends 'base/base.html' %}
 {% block content %}
 <h1>Welcome</h1>
+{% for  post in posts %}
+{{post._id}}
+{{post.slug}}
+{{post.title}}
+{{post.body}}
+{{post.created}}
+{{post.is_active}}
+<br>
+{% endfor %}
 {% endblock %}
