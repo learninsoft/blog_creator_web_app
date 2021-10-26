@@ -1,5 +1,5 @@
 from website import create_site
-from flask import request
+
 app = create_site()
 
 if __name__ == "__main__":

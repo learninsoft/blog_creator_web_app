@@ -1,8 +1,6 @@
-import json
-from flask import flash, Blueprint, render_template, request, jsonify, make_response
+from flask import Blueprint, render_template, request, jsonify, make_response
 from .models import Post
 
-from website import db
 from website.applications.utils.logger import Logger
 
 
@@ -13,7 +11,7 @@ blogs = Blueprint('blogs', __name__)
 @blogs.route("/")
 def home_view():
     log_obj.info("Rendering the blog home page")
-    posts = Post.query.filter(Post._id>15,Post.slug.startswith('H')).order_by(Post._id.desc()).limit(3)
+    posts = Post.query.filter(Post._id > 15, Post.slug.startswith('H')).order_by(Post._id.desc()).limit(3)
     return render_template("blog/home.html", posts=posts)
 
 
@@ -33,7 +31,7 @@ def create_post():
             new_post = Post(**post)
             log_obj.info("Saving the post to Database")
             new_post.save()
-            if new_post._id:
+            if new_post.id:
                 is_post_created = True
         else:
             log_obj.info("Displaying the Page to create the post")
@@ -47,20 +45,18 @@ def create_post():
         if is_post_created:
             log_obj.info("The post is created successfully. ")
             return jsonify(new_post.to_dict())
-        # if cookie_val:
-        #     err_message = cookie_val
         log_obj.info("Rendering the page: --> blog/create.html")
-        resp = make_response(render_template(render_template("blog/create.html",err_message=err_message)))
+        resp = make_response(render_template(render_template("blog/create.html", err_message=err_message)))
         resp.set_cookie("learning", "cookieTest")
         return resp
 
 
 @blogs.route("/view/<int:id>")
 def view_post(id):
+    post = {}
     try:
-        post = {}
         post = Post.query.get(id)
-    except:
+    except Exception:
         log_obj.error("Error occurred", exc_info=True)
     resp = make_response(render_template("blog/view.html", post=post))
     resp.set_cookie("learning", "cookieTest")
