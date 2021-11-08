@@ -133,3 +133,5 @@ dmypy.json
 
 # database migrations folder
 migrations/
+
+.idea/

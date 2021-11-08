@@ -1,4 +1,6 @@
-from flask import Blueprint, render_template, request, jsonify, make_response
+import werkzeug.exceptions
+
+from flask import Blueprint, render_template, request, jsonify, make_response, abort
 from .models import Post
 
 from website.applications.utils.logger import Logger
@@ -46,7 +48,7 @@ def create_post():
             log_obj.info("The post is created successfully. ")
             return jsonify(new_post.to_dict())
         log_obj.info("Rendering the page: --> blog/create.html")
-        resp = make_response(render_template(render_template("blog/create.html", err_message=err_message)))
+        resp = make_response(render_template("blog/create.html", err_message=err_message))
         resp.set_cookie("learning", "cookieTest")
         return resp
 
@@ -55,7 +57,9 @@ def create_post():
 def view_post(id):
     post = {}
     try:
-        post = Post.query.get(id)
+        post = Post.query.get_or_404(id)
+    except werkzeug.exceptions.NotFound:
+        abort(404)
     except Exception:
         log_obj.error("Error occurred", exc_info=True)
     resp = make_response(render_template("blog/view.html", post=post))
