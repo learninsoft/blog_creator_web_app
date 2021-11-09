@@ -13,8 +13,9 @@ blogs = Blueprint('blogs', __name__)
 @blogs.route("/")
 def home_view():
     log_obj.info("Rendering the blog home page")
-    posts = Post.query.filter(Post._id > 15, Post.slug.startswith('H')).order_by(Post._id.desc()).limit(3)
-    return render_template("blog/home.html", posts=posts)
+    # posts = Post.query.filter(Post._id > 15, Post.slug.startswith('H')).order_by(Post._id.desc()).limit(3)
+    # return render_template("blog/home.html", posts=posts)
+    return render_template("blog/home.html")
 
 
 @blogs.route("/create", methods=["GET", "POST"])
