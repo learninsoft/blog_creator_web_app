@@ -1,0 +1,58 @@
+{% extends 'base/base.html' %}
+{% block head_block %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/instructions.css') }}">
+{% endblock %}
+{% block content %}
+
+    <div class="info" id="">
+      <div class="container-fluid">
+        <ul>
+          <li>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque est
+            animi officia alias possimus, et vel! Asperiores libero incidunt
+            iste quo quia voluptates quas, voluptate soluta consequatur
+            doloribus officia cumque.
+          </li>
+          <br />
+          <li>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Obcaecati
+            sunt quae possimus officia. Commodi sequi nulla voluptas deleniti
+            provident reprehenderit, quas accusamus, delectus possimus esse,
+            sunt reiciendis fugit? Distinctio, quod!
+          </li>
+          <br />
+          <li>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem porro
+            labore quod, ex dicta ipsum incidunt praesentium expedita facilis
+            officiis earum iste fugit quaerat veritatis est sapiente explicabo a
+            architecto.
+          </li>
+          <br />
+          <li>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Perspiciatis et officia nihil molestias placeat neque facilis
+            voluptatem! Ex amet, consequatur quam nobis ut perferendis ratione
+            atque recusandae laboriosam nulla ipsum.
+          </li>
+          <br />
+          <li>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem
+            corrupti culpa, fugiat obcaecati ratione facere? Ut reiciendis dicta
+            quae similique asperiores atque rerum tempore, necessitatibus
+            repellendus, error esse, perferendis voluptate!
+          </li>
+        </ul>
+
+        <div class="down1">
+          <div class="ckbx"><input type="checkbox" /> i agree</div>
+          <div class="ckbx">
+            <button class="btn btn-info">Go Back</button>
+          </div>
+        </div>
+          <a href="{{ url_for('blogs.create_post') }}">
+              <button class="btn btn-danger">create</button>
+          </a>
+      </div>
+    </div>
+
+{% endblock %}

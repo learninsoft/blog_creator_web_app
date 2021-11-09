@@ -20,10 +20,10 @@ def home_view():
 @blogs.route("/create", methods=["GET", "POST"])
 def create_post():
     log_obj.info("STARTing the function")
+    is_post_created = False
+    err_message = ""
     try:
         # cookie_val = request.cookies.get('learning')
-        is_post_created = False
-        err_message = None
         log_obj.debug(f"Request method: {request.method}")
         log_obj.info(f"Client IP address: {request.remote_addr}")
         if request.method == "POST":
@@ -46,7 +46,7 @@ def create_post():
     finally:
         if is_post_created:
             log_obj.info("The post is created successfully. ")
-            return jsonify(new_post.to_dict())
+            return render_template("blog/published.html", err_message=err_message)
         log_obj.info("Rendering the page: --> blog/create.html")
         resp = make_response(render_template("blog/create.html", err_message=err_message))
         resp.set_cookie("learning", "cookieTest")
@@ -74,3 +74,11 @@ def view_post(id):
 #     except:
 #         log_obj.error("Error occurred", exc_info=True)
 #     return render_template("blog/view.html", post=post)
+
+
+@blogs.route("/instructions")
+def instructions_view():
+    log_obj.info("Rendering the blog instructions page")
+    return render_template("blog/instructions.html")
+    # return render_template("blog/published.html", err_message="")
+

@@ -1,5 +1,62 @@
 {% extends 'base/base.html' %}
+{% block head_block %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/create.css') }}">
+
+    <!-- Include the Quill library -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="{{ url_for('static', filename='js/create_editor.js') }}"></script>
+{% endblock %}
 {% block content %}
-<h1>Blog  create page</h1>
-{{err_message}}
+
+    <div class="body">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12 col-sm-6 col-md-6">
+            <form>
+              <div class="form-group">
+                <label for="title">Enter your Title</label>
+                <input type="text" class="form-control" id="title" />
+              </div>
+              <div class="form-group">
+                <label for="category">category</label>
+                <input type="text" class="form-control" id="category" />
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="editor">
+          <div id="editor">
+            <p>Hello Blogger!</p>
+            <p>Had <strong>Your</strong> Brunch?</p>
+            <p><br /></p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="ref">Reference</label>
+          <textarea class="form-control" id="ref" rows="2"></textarea>
+        </div>
+        <div class="toggle">
+          <p><strong> INDEX off/on</strong></p>
+          <label class="switch">
+            <input type="checkbox" checked />
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div>
+          <label for="">Genrate Link</label>
+          <select id="type">
+            <option selected></option>
+            <option>auto</option>
+            <option>manual</option>
+          </select>
+          <input type="text" class="form-control" />
+        </div>
+        <br />
+        <button type="button" class="btn btn-outline-success">create</button>
+      </div>
+    </div>
+<!-- Include the Quill library -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="{{ url_for('static', filename='js/create_editor.js') }}"></script>
 {% endblock %}

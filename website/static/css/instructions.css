@@ -1,0 +1,14 @@
+body {
+  height: 100vh;
+}
+.down1 {
+  display: flex;
+}
+.ckbx {
+  padding: 10px;
+}
+footer {
+  background-color: black;
+  color: aquamarine;
+  text-align: center;
+}

@@ -1,13 +1,38 @@
 {% extends 'base/base.html' %}
 {% block content %}
-<h1>Welcome</h1>
-{% for  post in posts %}
-{{post._id}}
-{{post.slug}}
-{{post.title}}
-{{post.body}}
-{{post.created}}
-{{post.is_active}}
-<br>
-{% endfor %}
+    <div class="search">
+      <div class="container">
+        <div class="d-flex justify-content-center">
+          <div class="row">
+            <div class="col-xsm-12">
+              <div class="input-group mb-3">
+                <input
+                  type="text"
+                  class="form-control input-text"
+                  placeholder="Search blogs...."
+                  aria-label="Recipient's username"
+                  aria-describedby="basic-addon2"
+                />
+                <div class="input-group-append">
+                  <button class="btn btn-outline-warning btn-md" type="button">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="button">
+        <div class="create">
+            <a href="{{ url_for('blogs.instructions_view') }}">
+          <button class="btn btn-danger">create</button></a>
+        </div>
+        <div class="create">
+          <button class="btn btn-warning">view blogs</button>
+        </div>
+      </div>
+    </div>
+
 {% endblock %}
