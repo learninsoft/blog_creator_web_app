@@ -62,7 +62,11 @@ class Post(db.Model):
             raise Exception(exc)
 
     def to_dict(self):
-        return {"id": self._id, "title": self.title, "slug": self.slug}
+        return {"id": self.id, "title": self.title, "slug": self.slug}
+
+    @property
+    def id(self):
+        return self._id
 
 
 class Tag(db.Model):
