@@ -105,7 +105,7 @@ def instructions_view():
 def published_view(**kwargs):
     log_obj.info("Rendering the page: --> blog/published.html")
     log_obj.info(f"{kwargs}")
-    new_post = kwargs.get('post_info', {"id":999, "title":"dummy", "slug": "dummy-slug"})
+    new_post = kwargs.get('post_info', {"id": 999, "title": "dummy", "slug": "dummy-slug"})
     log_obj.info(f"{new_post}")
     return render_template("blog/published.html", blog=json.loads(new_post))
 

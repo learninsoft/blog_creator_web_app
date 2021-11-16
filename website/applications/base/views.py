@@ -28,4 +28,3 @@ def view_log(key):
         LOG_SECRET_KEY = os.environ.get('LOG_SECRET_KEY', None)
         log_obj.info(f"Log secret key value: {LOG_SECRET_KEY}")
         return render_template("base/view_log.html", log_contents=[])
-
