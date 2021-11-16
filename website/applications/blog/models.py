@@ -27,14 +27,21 @@ class Post(db.Model):
     body = db.Column(db.Text)
     created = db.Column(db.DateTime, default=datetime.now())
     is_active = db.Column(db.Boolean, default=True)
+    category = db.Column(db.String(300), default="default")
     tags = db.relationship('Tag', secondary=post_tags, backref=db.backref('posts'), lazy='dynamic')
 
     def __init__(self, *args, **kwargs):
         super(Post, self).__init__(*args, **kwargs)
         self._generate_slug()
+        self._process_body()
+
+    def _process_body(self):
+        self.body = f'<div class={self.body.split("<div class=")[1]}'.replace(
+            'class="ql-editor" data-gramm="false" contenteditable="true"', "")
 
     def _generate_slug(self):
-        self.slug = slugify(self.title)
+        if not self.slug:
+            self.slug = slugify(self.title)
 
     def validate(self):
         log_obj.info("Validating the Post values. ")

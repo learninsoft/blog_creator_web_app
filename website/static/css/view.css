@@ -1,0 +1,12 @@
+.view {
+  min-height: 100vh;
+}
+.container-fluid h1 {
+  text-align: center;
+}
+.col {
+  height: 300px;
+}
+.text {
+  text-align: center;
+}
