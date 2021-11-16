@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+{% block head_block %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/publish.css') }}">
+    <script src="{{ url_for('static', filename='js/publish.js') }}"></script>
+{% endblock %}
+{% block content %}
+    <center>
+      <div class="body">
+        <div class="container-fluid">
+          <div class="publish">
+            <br /><br />
+            <span id="publish"></span> published successfully!
+          </div>
+          <br /><br />
+          <button
+            type="button"
+            onclick="myFunction()"
+            onmouseout="outFunc()"
+            id="myTooltip"
+            class="btn btn-secondary"
+          >
+            Copy to clipboard
+          </button>
+          <br /><br /><input class="form-control" type="text" id="myInput" />
+        </div>
+
+        <br /><br />
+
+        <div class="button">
+          <div class="view">
+            <button class="btn btn-warning">view blog</button>
+          </div>
+          <div class="create">
+            <button class="btn btn-danger">create one</button>
+          </div>
+        </div>
+      </div>
+    </center>
+{% endblock %}

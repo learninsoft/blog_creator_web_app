@@ -1,0 +1,18 @@
+.body {
+  background-color: rgb(84, 203, 250);
+  height: 100vh;
+}
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.view {
+  display: flex;
+  padding: 10px;
+}
+footer {
+  background-color: black;
+  color: aquamarine;
+  text-align: center;
+}

@@ -1,4 +1,6 @@
-from flask import Blueprint, render_template, request, jsonify, make_response
+import werkzeug.exceptions
+
+from flask import Blueprint, render_template, request, jsonify, make_response, abort
 from .models import Post
 
 from website.applications.utils.logger import Logger
@@ -11,17 +13,18 @@ blogs = Blueprint('blogs', __name__)
 @blogs.route("/")
 def home_view():
     log_obj.info("Rendering the blog home page")
-    posts = Post.query.filter(Post._id > 15, Post.slug.startswith('H')).order_by(Post._id.desc()).limit(3)
-    return render_template("blog/home.html", posts=posts)
+    # posts = Post.query.filter(Post._id > 15, Post.slug.startswith('H')).order_by(Post._id.desc()).limit(3)
+    # return render_template("blog/home.html", posts=posts)
+    return render_template("blog/home.html")
 
 
 @blogs.route("/create", methods=["GET", "POST"])
 def create_post():
     log_obj.info("STARTing the function")
+    is_post_created = False
+    err_message = ""
     try:
         # cookie_val = request.cookies.get('learning')
-        is_post_created = False
-        err_message = None
         log_obj.debug(f"Request method: {request.method}")
         log_obj.info(f"Client IP address: {request.remote_addr}")
         if request.method == "POST":
@@ -44,9 +47,9 @@ def create_post():
     finally:
         if is_post_created:
             log_obj.info("The post is created successfully. ")
-            return jsonify(new_post.to_dict())
+            return render_template("blog/published.html", err_message=err_message)
         log_obj.info("Rendering the page: --> blog/create.html")
-        resp = make_response(render_template(render_template("blog/create.html", err_message=err_message)))
+        resp = make_response(render_template("blog/create.html", err_message=err_message))
         resp.set_cookie("learning", "cookieTest")
         return resp
 
@@ -55,7 +58,9 @@ def create_post():
 def view_post(id):
     post = {}
     try:
-        post = Post.query.get(id)
+        post = Post.query.get_or_404(id)
+    except werkzeug.exceptions.NotFound:
+        abort(404)
     except Exception:
         log_obj.error("Error occurred", exc_info=True)
     resp = make_response(render_template("blog/view.html", post=post))
@@ -70,3 +75,11 @@ def view_post(id):
 #     except:
 #         log_obj.error("Error occurred", exc_info=True)
 #     return render_template("blog/view.html", post=post)
+
+
+@blogs.route("/instructions")
+def instructions_view():
+    log_obj.info("Rendering the blog instructions page")
+    return render_template("blog/instructions.html")
+    # return render_template("blog/published.html", err_message="")
+
