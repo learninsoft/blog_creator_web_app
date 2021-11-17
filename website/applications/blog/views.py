@@ -23,6 +23,7 @@ def home_view():
 def create_post():
     log_obj.info("STARTing the function")
     is_post_created = False
+    is_slug_exists = False
     err_message = ""
     try:
         # cookie_val = request.cookies.get('learning')
@@ -43,19 +44,24 @@ def create_post():
         log_obj.exception("AssertionError in the fields", exc_info=True)
         err_message = str(aser)
     except Exception as exc:
-        log_obj.exception("error occurred", exc_info=True)
+        log_obj.exception("error occurred creating the post", exc_info=True)
+        if "(sqlite3.IntegrityError)" in str(exc):
+            is_slug_exists = True
         err_message = str(exc)
     finally:
+        if is_slug_exists:
+            log_obj.info("slug already exists")
+            err_message = "Slug already exists. Please choose another one. "
         if is_post_created:
             log_obj.info("The post is created successfully. ")
             log_obj.info(f"New post created. {new_post.to_dict()}")
             # return make_response(jsonify(new_post.to_dict()), 201)
             log_obj.info(f"{type(new_post)}")
-            return redirect(url_for("blogs.view_post", id=new_post.id))
+            # return redirect(url_for("blogs.view_post", id=new_post.id))
             # return render_template("blog/published.html", blog=new_post.to_dict())
 
-            # return redirect(url_for('blogs.published_view',
-            # post_info=json.dumps(new_post.to_dict())))
+            return redirect(url_for('blogs.published_view',
+            post_info=json.dumps(new_post.to_dict())))
             # return redirect(url_for('blogs.published_view',  post=new_post))
             # return render_template("blog/published.html", blog=new_post, err_message=err_message)
         log_obj.info("Rendering the page: --> blog/create.html")

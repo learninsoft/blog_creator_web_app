@@ -1,8 +1,10 @@
 import re
 
 from datetime import datetime
-from website import db
 
+import sqlalchemy
+
+from website import db
 from website.applications.utils.logger import Logger
 
 
@@ -64,6 +66,10 @@ class Post(db.Model):
             db.session.commit()
             log_obj.info("Successfully saved the post")
             return self.to_dict()
+        except sqlalchemy.exc.IntegrityError as integrity_err:
+            log_obj.debug(f"{self.slug} already exists. ")
+            log_obj.exception("error occurred integrity error sqlalchemy", exc_info=True)
+            raise Exception(integrity_err)
         except Exception as exc:
             log_obj.exception("Error occurred while saving the post", exc_info=True)
             raise Exception(exc)
