@@ -1,0 +1,8 @@
+{% extends "base/base.html" %}
+{% block content %}
+    {% for log_content in log_contents %}
+        <li>
+        {{ log_content }}
+        </li>
+    {% endfor %}
+{% endblock %}

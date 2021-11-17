@@ -9,7 +9,9 @@
         <div class="container-fluid">
           <div class="publish">
             <br /><br />
-            <span id="publish"></span> published successfully!
+              {% if blog %}
+            <span id="publish"></span> {{ blog['title'] }} published successfully!
+              {% endif %}
           </div>
           <br /><br />
           <button
@@ -21,17 +23,26 @@
           >
             Copy to clipboard
           </button>
-          <br /><br /><input class="form-control" type="text" id="myInput" />
+            {% if blog %}
+          <br /><br /><input class="form-control" type="text" id="myInput" value="{{ blog['slug'] }}"/>
+            {% endif %}
         </div>
 
         <br /><br />
 
         <div class="button">
           <div class="view">
+          {{ blog }}
+              {% if blog %}
+              <a href="{{ url_for('blogs.view_post', id=blog['id']) }}">
             <button class="btn btn-warning">view blog</button>
+              </a>
+              {% endif %}
           </div>
           <div class="create">
+              <a href="{{ url_for('blogs.create_post') }}">
             <button class="btn btn-danger">create one</button>
+              </a>
           </div>
         </div>
       </div>

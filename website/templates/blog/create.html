@@ -11,7 +11,7 @@
     <script src="{{ url_for('static', filename='js/create_editor.js') }}"></script>
 {% endblock %}
 {% block content %}
-<form method="post">
+{#<form method="post">#}
     <div class="body">
       <div class="container-fluid">
         <div class="row">
@@ -22,7 +22,7 @@
               </div>
               <div class="form-group">
                 <label for="category">category</label>
-                <input type="text" class="form-control" id="category" />
+                <input type="text" class="form-control" id="category" name="category"/>
               </div>
 {#            </form>#}
           </div>
@@ -37,30 +37,56 @@
 
         <div class="form-group">
           <label for="ref">Reference</label>
-          <textarea class="form-control" id="ref" rows="2"></textarea>
+          <textarea class="form-control" id="ref" rows="1" name="references"></textarea>
         </div>
         <div class="toggle">
           <p><strong> INDEX off/on</strong></p>
           <label class="switch">
-            <input type="checkbox" checked />
+            <input type="checkbox" checked name="is_active" />
             <span class="slider round"></span>
           </label>
         </div>
         <div>
-          <label for="">Genrate Link</label>
-          <select id="type">
+          <label for="">Generate Link</label>
+          <select id="type" name="slug_options">
             <option selected></option>
             <option>auto</option>
             <option>manual</option>
           </select>
-          <input type="text" class="form-control" name="body"/>
+          <input type="text" class="form-control" name="slug" id="slug"/>
         </div>
         <br />
-        <button type="submit" class="btn btn-outline-success">create</button>
+        <button type="submit" class="btn btn-outline-success" onclick="submitForm()">create</button>
       </div>
     </div>
-    </form>
+{#    </form>#}
 <!-- Include the Quill library -->
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <script src="{{ url_for('static', filename='js/create_editor.js') }}"></script>
+
+    <script type="text/javascript">
+        function submitForm(){
+            console.log("Button clicked.")
+            body = document.getElementById('editor').innerHTML
+            title = document.getElementById('title').value
+            slug = document.getElementById('slug').value
+            category = document.getElementById('category').value
+
+            formData = {'body':body, 'title':title, 'slug':slug, 'category':category}
+            fetch(
+                '{{ url_for('blogs.create_post') }}',
+                {
+                    method: "POST",
+                    body: JSON.stringify(formData),
+                }).then(
+                    (_res) => {
+                        console.log(_res.clone().json())
+                        {#const rec_data = _res.json();#}
+                        {#console.log(_res.text())#}
+                        {#console.log(rec_data)#}
+                        {#window.location.href = '{{ url_for('blogs.published_view', post_info=rec_data) }}'#}
+                    }
+            )
+        }
+    </script>
 {% endblock %}
