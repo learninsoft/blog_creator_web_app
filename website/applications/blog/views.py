@@ -2,7 +2,7 @@ import json
 import werkzeug.exceptions
 
 from flask import (Blueprint, render_template, request, make_response,
-                   abort, redirect, url_for)
+                   abort, redirect, url_for, jsonify)
 
 from .models import Post
 
@@ -55,7 +55,8 @@ def create_post():
         if is_post_created:
             log_obj.info("The post is created successfully. ")
             log_obj.info(f"New post created. {new_post.to_dict()}")
-            # return make_response(jsonify(new_post.to_dict()), 201)
+            rets = {**new_post.to_dict(), "redirect_to":url_for('blogs.published_view', post_info=json.dumps(new_post.to_dict()))}
+            return make_response(jsonify(rets), 201)
             log_obj.info(f"{type(new_post)}")
             # return redirect(url_for("blogs.view_post", id=new_post.id))
             # return render_template("blog/published.html", blog=new_post.to_dict())
