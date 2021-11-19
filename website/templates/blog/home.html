@@ -6,6 +6,7 @@
           <div class="row">
             <div class="col-xsm-12">
               <div class="input-group mb-3">
+                  <form action="{{ url_for('blogs.search_posts') }}">
                 <input
                   type="text"
                   class="form-control input-text"
@@ -14,10 +15,11 @@
                   aria-describedby="basic-addon2"
                 />
                 <div class="input-group-append">
-                  <button class="btn btn-outline-warning btn-md" type="button">
+                  <button class="btn btn-outline-warning btn-md" type="submit">
                     <i class="fas fa-search"></i>
                   </button>
                 </div>
+                  </form>
               </div>
             </div>
           </div>

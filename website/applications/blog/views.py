@@ -2,7 +2,7 @@ import json
 import werkzeug.exceptions
 
 from flask import (Blueprint, render_template, request, make_response,
-                   abort, redirect, url_for)
+                   abort, redirect, url_for, jsonify)
 
 from .models import Post
 
@@ -15,14 +15,23 @@ blogs = Blueprint('blogs', __name__)
 
 @blogs.route("/")
 def home_view():
+    """
+    blog page home view
+    :return:
+    """
     log_obj.info("Rendering the blog home page")
     return render_template("blog/home.html")
 
 
 @blogs.route("/create", methods=["GET", "POST"])
 def create_post():
+    """
+    route for Creating the blog post
+    :return:
+    """
     log_obj.info("STARTing the function")
     is_post_created = False
+    is_slug_exists = False
     err_message = ""
     try:
         # cookie_val = request.cookies.get('learning')
@@ -43,17 +52,25 @@ def create_post():
         log_obj.exception("AssertionError in the fields", exc_info=True)
         err_message = str(aser)
     except Exception as exc:
-        log_obj.exception("error occurred", exc_info=True)
+        log_obj.exception("error occurred creating the post", exc_info=True)
+        if "(sqlite3.IntegrityError)" in str(exc):
+            is_slug_exists = True
         err_message = str(exc)
     finally:
+        if err_message:
+            err_message = "Something went wrong. Crosscheck the information, that you've entered"
+        if is_slug_exists:
+            log_obj.info("slug already exists")
+            err_message = "Slug already exists. Please choose another one. "
         if is_post_created:
             log_obj.info("The post is created successfully. ")
             log_obj.info(f"New post created. {new_post.to_dict()}")
-            # return make_response(jsonify(new_post.to_dict()), 201)
+            rets = {**new_post.to_dict(), "redirect_to":url_for('blogs.published_view', post_info=json.dumps(new_post.to_dict()))}
+            return make_response(jsonify(rets), 201)
             log_obj.info(f"{type(new_post)}")
-            return redirect(url_for("blogs.view_post", id=new_post.id))
+            # return redirect(url_for("blogs.view_post", id=new_post.id))
             # return render_template("blog/published.html", blog=new_post.to_dict())
-
+            #
             # return redirect(url_for('blogs.published_view',
             # post_info=json.dumps(new_post.to_dict())))
             # return redirect(url_for('blogs.published_view',  post=new_post))
@@ -96,17 +113,25 @@ def view_post(id):
 
 @blogs.route("/instructions")
 def instructions_view():
+    """
+    Instructions page view
+    :return:
+    """
     log_obj.info("Rendering the blog instructions page")
     return render_template("blog/instructions.html")
-    # return render_template("blog/published.html", err_message="")
 
 
 @blogs.route("/publish/<string:post_info>")
 def published_view(**kwargs):
+    """
+    publish page, which will be shown after successful entry of the post.
+    :param kwargs:
+    :return:
+    """
     log_obj.info("Rendering the page: --> blog/published.html")
     log_obj.info(f"{kwargs}")
     new_post = kwargs.get('post_info', {"id": 999, "title": "dummy", "slug": "dummy-slug"})
-    log_obj.info(f"{new_post}")
+    log_obj.info(f"Post published: {new_post}")
     return render_template("blog/published.html", blog=json.loads(new_post))
 
 
@@ -118,6 +143,20 @@ def view_all_posts():
         log_obj.info(f"Total retrieved posts: {len(posts)}")
     except Exception:
         log_obj.error("Error occurred in view_all_posts() ", exc_info=True)
+    return render_template("blog/all_view.html", posts=posts)
+
+
+@blogs.route("/search")
+def search_posts():
+    posts = {}
+    try:
+        search_params = request.args.get("search_params", "welcome")
+        log_obj.info(f"Search parameters: {search_params}")
+        posts = Post.query.filter(Post.slug.startswith(search_params))\
+            .order_by(Post._id.desc()).limit(9)
+        log_obj.info(f"Posts retrieved. ")
+    except Exception:
+        log_obj.error("Error occurred in search_posts() ", exc_info=True)
     return render_template("blog/all_view.html", posts=posts)
 
 

@@ -49,6 +49,15 @@
         </div>
       </nav>
     </header>
+    {% if err_message %}
+        <div class="alert alert-danger alert-dismissable fade show" role="alert">
+            {{ err_message }}
+                    <button type="button" class="close" data-dismiss="alert">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+    {% endif %}
+
 
     {% block content %}
 
@@ -56,8 +65,8 @@
 
     <footer>testing dot html</footer>
     <script
-      src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"
+{#      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"#}
       crossorigin="anonymous"
     ></script>
     <script

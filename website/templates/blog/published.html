@@ -32,7 +32,6 @@
 
         <div class="button">
           <div class="view">
-          {{ blog }}
               {% if blog %}
               <a href="{{ url_for('blogs.view_post', id=blog['id']) }}">
             <button class="btn btn-warning">view blog</button>
