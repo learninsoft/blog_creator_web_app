@@ -14,6 +14,10 @@ log_obj = Logger(name=__name__).logger
 
 @base.route("/")
 def home_view():
+    """
+    The base route, which will redirect to blogs home page
+    :return: redirecting to blogs home page
+    """
     log_obj.info("Redirecting Home View to blogs page. ")
     return redirect(url_for('blogs.home_view'))
 
