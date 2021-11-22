@@ -19,7 +19,7 @@ def slugify(s):
     """
     log_obj.info(f"Generating the slug: {s}")
     pattern = r'[^\w+]'
-    return re.sub(pattern, '-', s)
+    return re.sub(pattern, '-', s).lower()
 
 
 # post_tags = db.Table('post_tags',
@@ -34,7 +34,8 @@ class Post(db.Model):
     """
     _id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(140))
-    slug = db.Column(db.String(140), unique=True)
+    slug = db.Column(db.String(180), unique=True)
+    slug_type = db.Column(db.String(10))
     body = db.Column(db.Text)
     created = db.Column(db.DateTime, default=datetime.now())
     is_active = db.Column(db.Boolean, default=True)
@@ -63,6 +64,9 @@ class Post(db.Model):
         if not self.slug:
             log_obj.info("Generating the slug")
             self.slug = slugify(self.title)
+        else:
+            log_obj.info("slug entered value to clean slug")
+            self.slug = slugify(self.slug)
 
     def validate(self):
         """

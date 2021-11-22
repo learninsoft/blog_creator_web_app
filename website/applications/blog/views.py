@@ -7,6 +7,7 @@ from flask import (Blueprint, render_template, request, make_response,
 from .models import Post
 
 from website.applications.utils.logger import Logger
+from website.applications.blog.helpers import slug_exists
 
 
 log_obj = Logger(name=__name__).logger
@@ -42,10 +43,14 @@ def create_post():
             log_obj.debug(f"{post}")
             log_obj.info("Creating the post")
             new_post = Post(**post)
-            log_obj.info("Saving the post to Database")
-            new_post.save()
-            if new_post.id:
-                is_post_created = True
+            slug_status = slug_exists(new_post.slug)
+            if not slug_status['is_slug_exists']:
+                log_obj.info("Saving the post to Database")
+                new_post.save()
+                if new_post.id:
+                    is_post_created = True
+            else:
+                is_slug_exists = True
         else:
             log_obj.info("Displaying the Page to create the post")
     except AssertionError as aser:
@@ -61,13 +66,17 @@ def create_post():
             err_message = "Something went wrong. Crosscheck the information, that you've entered"
         if is_slug_exists:
             log_obj.info("slug already exists")
-            err_message = "Slug already exists. Please choose another one. "
+            err_message = "Link already exists. Please choose another one. "
+            rets = {"link_exists": True, "message":err_message}
+            return make_response(jsonify(rets), 200)
         if is_post_created:
             log_obj.info("The post is created successfully. ")
             log_obj.info(f"New post created. {new_post.to_dict()}")
-            rets = {**new_post.to_dict(), "redirect_to":url_for('blogs.published_view', post_info=json.dumps(new_post.to_dict()))}
+            rets = {**new_post.to_dict(), "link_exists": False,
+                    "redirect_to":url_for('blogs.published_view',
+                                          post_info=json.dumps(new_post.to_dict()))}
             return make_response(jsonify(rets), 201)
-            log_obj.info(f"{type(new_post)}")
+            # log_obj.info(f"{type(new_post)}")
             # return redirect(url_for("blogs.view_post", id=new_post.id))
             # return render_template("blog/published.html", blog=new_post.to_dict())
             #

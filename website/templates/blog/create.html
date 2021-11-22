@@ -48,12 +48,12 @@
         </div>
         <div>
           <label for="">Generate Link</label>
-          <select id="type" name="slug_options">
+          <select id="type" name="slug_options" onchange="generate_link(this.value)">
             <option selected></option>
-            <option>auto</option>
-            <option>manual</option>
+            <option value="auto">auto</option>
+            <option value="manual">manual</option>
           </select>
-          <input type="text" class="form-control" name="slug" id="slug"/>
+          <input type="text" class="form-control" name="slug" id="slug" oninput="slug_changed(this.value)"/>
         </div>
         <br />
         <button type="submit" class="btn btn-outline-success" onclick="submitForm()">create</button>
@@ -65,6 +65,26 @@
     <script src="{{ url_for('static', filename='js/create_editor.js') }}"></script>
 
     <script type="text/javascript">
+
+        function generate_link(value) {
+            const current_slug_value = document.getElementById('slug').value;
+            if (!current_slug_value){
+                if (value === "auto"){
+                console.log(value);
+                document.getElementById('slug').value = "value" + value
+                }
+                else if(value === "manual"){
+                    console.log("value of manual: "+value)
+                }
+            }
+
+        }
+
+        function slug_changed(value) {
+            console.log("value of slug: "+value)
+
+        }
+
         function submitForm(){
             console.log("Button clicked.")
             body = document.getElementById('editor').innerHTML
@@ -82,7 +102,11 @@
                 success: function (data) {
                     console.log(typeof data);
                     console.log(data);
-                    window.location.href = data['redirect_to']
+                    if (data['link_exists']){
+                        alert(data['message'])
+                    } else {
+                        window.location.href = data['redirect_to']
+                    }
                 },
                 error: function (error) {
                     console.log(`Error ${error}`);
