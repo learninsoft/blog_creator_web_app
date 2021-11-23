@@ -30,7 +30,7 @@ def slug_exists(slug_value):
     try:
         log_obj.info(f"Slug Search parameters: {slug_value}")
         posts = Post.query.filter_by(slug=slugify(slug_value)).first()
-        log_obj.info(f"Posts retrieved. with slug")
+        log_obj.info("Posts retrieved. with slug")
         if posts:
             return_status['message'] = f"Post Exists with the slug {slug_value} at {posts.id}"
             return_status['is_slug_exists'] = True

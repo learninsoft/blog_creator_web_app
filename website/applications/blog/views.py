@@ -2,7 +2,7 @@ import json
 import werkzeug.exceptions
 
 from flask import (Blueprint, render_template, request, make_response,
-                   abort, redirect, url_for, jsonify)
+                   abort, url_for, jsonify)
 
 from .models import Post
 
@@ -44,7 +44,7 @@ def create_post():
             log_obj.info("Creating the post")
             new_post = Post(**post)
             slug_status = slug_exists(new_post.slug)
-            if not slug_status['is_slug_exists']:
+            if not slug_status['is_slug_exists'] or new_post.slug_type in ('auto', ):
                 log_obj.info("Saving the post to Database")
                 new_post.save()
                 if new_post.id:
@@ -67,14 +67,14 @@ def create_post():
         if is_slug_exists:
             log_obj.info("slug already exists")
             err_message = "Link already exists. Please choose another one. "
-            rets = {"link_exists": True, "message":err_message}
+            rets = {"link_exists": True, "message": err_message}
             return make_response(jsonify(rets), 200)
         if is_post_created:
             log_obj.info("The post is created successfully. ")
             log_obj.info(f"New post created. {new_post.to_dict()}")
             rets = {**new_post.to_dict(), "link_exists": False,
-                    "redirect_to":url_for('blogs.published_view',
-                                          post_info=json.dumps(new_post.to_dict()))}
+                    "redirect_to": url_for('blogs.published_view',
+                                           post_info=json.dumps(new_post.to_dict()))}
             return make_response(jsonify(rets), 201)
             # log_obj.info(f"{type(new_post)}")
             # return redirect(url_for("blogs.view_post", id=new_post.id))
@@ -123,7 +123,9 @@ def view_post(slug):
     try:
         log_obj.info(f"Querying for id: {slug}")
         post = Post.query.filter_by(slug=slug).first()
-        recent_posts = Post.query.order_by(Post._id.desc()).limit(3).all()
+        recent_posts = Post.query.filter(Post.is_active != 0)\
+            .order_by(Post._id.desc()).limit(3).all()
+        # recent_posts = Post.query.order_by(Post._id.desc()).limit(3).all()
         log_obj.info(f"Total recent posts retrieved: {len(recent_posts)}")
         log_obj.info(f"Post id {post.id} retrieved successfully. ")
 
@@ -169,7 +171,8 @@ def view_all_posts():
     """
     posts = {}
     try:
-        posts = Post.query.all()
+        posts = Post.query.filter(Post.is_active != 0)
+
         log_obj.info(f"Total retrieved posts: {len(posts)}")
     except Exception:
         log_obj.error("Error occurred in view_all_posts() ", exc_info=True)
@@ -186,9 +189,9 @@ def search_posts():
     try:
         search_params = request.args.get("search_params", "welcome")
         log_obj.info(f"Search parameters: {search_params}")
-        posts = Post.query.filter(Post.slug.startswith(search_params))\
+        posts = Post.query.filter(Post.is_active != 0, Post.slug.startswith(search_params))\
             .order_by(Post._id.desc()).limit(9)
-        log_obj.info(f"Posts retrieved. ")
+        log_obj.info("Posts retrieved. ")
     except Exception:
         log_obj.error("Error occurred in search_posts() ", exc_info=True)
     return render_template("blog/all_view.html", posts=posts)

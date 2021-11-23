@@ -1,4 +1,5 @@
 import re
+import time
 
 from datetime import datetime
 
@@ -40,7 +41,8 @@ class Post(db.Model):
     created = db.Column(db.DateTime, default=datetime.now())
     is_active = db.Column(db.Boolean, default=True)
     category = db.Column(db.String(300), default="default")
-    # tags = db.relationship('Tag', secondary=post_tags, backref=db.backref('posts'), lazy='dynamic')
+    # tags = db.relationship('Tag', secondary=post_tags,
+    # backref=db.backref('posts'), lazy='dynamic')
 
     def __init__(self, *args, **kwargs):
         super(Post, self).__init__(*args, **kwargs)
@@ -61,9 +63,9 @@ class Post(db.Model):
         generates the slug for the post based on the title, if slug is not there.
         :return:
         """
-        if not self.slug:
+        if not self.slug or self.slug_type in ('auto', ):
             log_obj.info("Generating the slug")
-            self.slug = slugify(self.title)
+            self.slug = slugify(self.title) + "-" + str(time.time_ns())
         else:
             log_obj.info("slug entered value to clean slug")
             self.slug = slugify(self.slug)
