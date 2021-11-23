@@ -12,7 +12,7 @@
 {% endblock %}
 {% block content %}
 {#<form method="post">#}
-    <div class="body">
+    <div class="body"><br>
       <div class="container-fluid">
         <div class="row">
           <div class="col-12 col-sm-6 col-md-6">
@@ -42,21 +42,21 @@
         <div class="toggle">
           <p><strong> INDEX off/on</strong></p>
           <label class="switch">
-            <input type="checkbox" checked name="is_active" />
+            <input type="checkbox" checked name="is_active" id="index_type"/>
             <span class="slider round"></span>
           </label>
         </div>
         <div>
           <label for="">Generate Link</label>
-          <select id="type" name="slug_options">
-            <option selected></option>
-            <option>auto</option>
-            <option>manual</option>
+          <select id="type" name="slug_options" onchange="generate_link(this.value)">
+{#            <option selected></option>#}
+            <option value="manual">manual</option>
+            <option value="auto">auto</option>
           </select>
-          <input type="text" class="form-control" name="slug" id="slug"/>
+          <input type="text" class="form-control" name="slug" id="slug" oninput="slug_changed(this.value)"/>
         </div>
         <br />
-        <button type="submit" class="btn btn-outline-success" onclick="submitForm()">create</button>
+        <button type="submit" class="btn btn-outline-secondary" onclick="submitForm()">create</button>
       </div>
     </div>
 {#    </form>#}
@@ -65,14 +65,46 @@
     <script src="{{ url_for('static', filename='js/create_editor.js') }}"></script>
 
     <script type="text/javascript">
+
+        function generate_link(value) {
+            const current_slug_value = document.getElementById('slug').value;
+            if (!current_slug_value){
+                if (value === "auto"){
+                console.log(value);
+                document.getElementById('slug').value = "value" + value
+                }
+                else if(value === "manual"){
+                    console.log("value of manual: "+value)
+                }
+            }
+
+        }
+
+        function slug_changed(value) {
+            console.log("value of slug: "+value)
+
+        }
+
+        function validate_inputs(){
+            body = document.getElementById('editor').innerHTML
+            title = document.getElementById('title').value
+            slug = document.getElementById('slug').value
+            category = document.getElementById('category').value
+        {#    TODO: Validate all the inputs entered in the form. if incorrect, popup the message in this function#}
+        }
+
         function submitForm(){
+            validate_inputs()
             console.log("Button clicked.")
             body = document.getElementById('editor').innerHTML
             title = document.getElementById('title').value
             slug = document.getElementById('slug').value
             category = document.getElementById('category').value
+            var slug_type = document.getElementById("type").value
+            var index_rdo=document.getElementById('index_type').checked;
 
-            formData = {'body': body, 'title': title, 'slug': slug, 'category': category}
+            formData = {'body': body, 'title': title, 'slug': slug, 'category': category,
+            'slug_type':slug_type, 'is_active': index_rdo}
             $.ajax({
                 url: '{{ url_for('blogs.create_post') }}',
                 type: "POST",
@@ -82,7 +114,11 @@
                 success: function (data) {
                     console.log(typeof data);
                     console.log(data);
-                    window.location.href = data['redirect_to']
+                    if (data['link_exists']){
+                        alert(data['message'])
+                    } else {
+                        window.location.href = data['redirect_to']
+                    }
                 },
                 error: function (error) {
                     console.log(`Error ${error}`);

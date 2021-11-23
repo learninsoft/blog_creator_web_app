@@ -1,42 +1,55 @@
 {% extends 'base/base.html' %}
 {% block content %}
     <div class="search">
-      <div class="container">
-        <div class="d-flex justify-content-center">
-          <div class="row">
-            <div class="col-xsm-12">
-              <div class="input-group mb-3">
-                  <form action="{{ url_for('blogs.search_posts') }}">
-                <input
-                  type="text"
-                  class="form-control input-text"
-                  placeholder="Search blogs...."
-                  aria-label="Recipient's username"
-                  aria-describedby="basic-addon2"
-                />
-                <div class="input-group-append">
-                  <button class="btn btn-outline-warning btn-md" type="submit">
-                    <i class="fas fa-search"></i>
-                  </button>
+        <div class="container">
+            <div class="d-flex justify-content-center">
+                <div class="row">
+                    <div class="col-xsm-12">
+{#                        <form action="{{ url_for('blogs.search_posts') }}">#}
+                            <div class="input-group mb-3">
+                                <input
+                                        id="search_string"
+                                        type="text"
+                                        class="form-control input-text"
+                                        placeholder="Search blogs...."
+                                        aria-label="Recipient's username"
+                                        aria-describedby="basic-addon2"
+                                />
+                                <div class="input-group-append">
+                                    <button onclick="search_posts()" class="btn btn-outline-warning btn-md" >
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+{#                        </form>#}
+                    </div>
                 </div>
-                  </form>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
 
-      <div class="button">
-        <div class="create">
-            <a href="{{ url_for('blogs.instructions_view') }}">
-          <button class="btn btn-danger">create</button></a>
+        <div class="button">
+            <div class="create">
+                <a href="{{ url_for('blogs.instructions_view') }}">
+                    <button class="btn btn-light">create</button>
+                </a
+                >
+            </div>
+            <div class="create">
+                <a href="{{ url_for('blogs.view_all_posts') }}">
+                    <button class="btn btn-dark">view blogs</button>
+                </a>
+            </div>
         </div>
-        <div class="create">
-            <a href="{{ url_for('blogs.view_all_posts') }}">
-          <button class="btn btn-warning">view blogs</button>
-            </a>
-        </div>
-      </div>
     </div>
+
+    <script type="text/javascript">
+
+        function search_posts(){
+            console.log("Search Button clicked.")
+            search_string = document.getElementById('search_string').value
+            window.location.href = "{{ url_for('blogs.search_posts') }}" + "?search_params=" + search_string
+        }
+
+    </script>
 
 {% endblock %}
