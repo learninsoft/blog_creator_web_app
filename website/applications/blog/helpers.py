@@ -21,6 +21,11 @@ def slugify(s):
 
 
 def slug_exists(slug_value):
+    """
+    Checks for whether slug_exists or not.
+    :param slug_value: slug string to check.
+    :return:
+    """
     return_status = {'is_slug_exists': True, 'message': ""}
     try:
         log_obj.info(f"Slug Search parameters: {slug_value}")

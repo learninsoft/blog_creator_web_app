@@ -90,34 +90,51 @@ def create_post():
         return resp
 
 
-@blogs.route("/view/<int:id>")
-def view_post(id):
+# @blogs.route("/view/<int:id>")
+# def view_post(id):
+#     post = {}
+#     recent_posts = {}
+#     try:
+#         log_obj.info(f"Querying for id: {id}")
+#         post = Post.query.get_or_404(id)
+#         recent_posts = Post.query.order_by(Post._id.desc()).limit(3).all()
+#         log_obj.info(f"Total recent posts retrieved: {len(recent_posts)}")
+#         log_obj.info(f"Post id {post.id} retrieved successfully. ")
+#
+#     except werkzeug.exceptions.NotFound:
+#         log_obj.warning(f"Querying for id: {id}, did not found")
+#         abort(404)
+#     except Exception:
+#         log_obj.error("Error occurred", exc_info=True)
+#     resp = make_response(render_template("blog/view.html", post=post, recent_posts=recent_posts))
+#     resp.set_cookie("learning", "cookieTest")
+#     return resp
+
+
+@blogs.route("/view/<string:slug>")
+def view_post(slug):
+    """
+    Returns the post, when the view url is hit.
+    :param slug: post slug
+    :return: post if exists, else 404 page
+    """
     post = {}
     recent_posts = {}
     try:
-        log_obj.info(f"Querying for id: {id}")
-        post = Post.query.get_or_404(id)
+        log_obj.info(f"Querying for id: {slug}")
+        post = Post.query.filter_by(slug=slug).first()
         recent_posts = Post.query.order_by(Post._id.desc()).limit(3).all()
         log_obj.info(f"Total recent posts retrieved: {len(recent_posts)}")
         log_obj.info(f"Post id {post.id} retrieved successfully. ")
 
     except werkzeug.exceptions.NotFound:
-        log_obj.warning(f"Querying for id: {id}, did not found")
+        log_obj.warning(f"Querying for slug: {slug}, did not found")
         abort(404)
     except Exception:
         log_obj.error("Error occurred", exc_info=True)
     resp = make_response(render_template("blog/view.html", post=post, recent_posts=recent_posts))
     resp.set_cookie("learning", "cookieTest")
     return resp
-#
-# @blogs.route("/view/<string:slug>")
-# def view_post(slug):
-#     try:
-#         post = {}
-#         post = Post.query.filter_by(slug=slug).first()
-#     except:
-#         log_obj.error("Error occurred", exc_info=True)
-#     return render_template("blog/view.html", post=post)
 
 
 @blogs.route("/instructions")
@@ -146,6 +163,10 @@ def published_view(**kwargs):
 
 @blogs.route("/all")
 def view_all_posts():
+    """
+    Returns all the posts and display to the user
+    :return:
+    """
     posts = {}
     try:
         posts = Post.query.all()
@@ -157,6 +178,10 @@ def view_all_posts():
 
 @blogs.route("/search")
 def search_posts():
+    """
+    Search for the posts based on the search string
+    :return:
+    """
     posts = {}
     try:
         search_params = request.args.get("search_params", "welcome")
@@ -171,11 +196,19 @@ def search_posts():
 
 @blogs.route("/about")
 def about_page():
+    """
+    renders about page
+    :return:
+    """
     log_obj.info("Rendering about us page. ")
     return render_template("blog/about_disclaimer.html", about=True)
 
 
 @blogs.route("/disclaimer")
 def disclaimer_page():
+    """
+    renders disclaimer page
+    :return:
+    """
     log_obj.info("Rendering disclaimer page. ")
     return render_template("blog/about_disclaimer.html", disclaimer=True)

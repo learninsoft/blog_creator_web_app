@@ -3,7 +3,7 @@
 }
 .body {
   min-height: 100vh;
-  background-color: lightsalmon;
+  background-color: rgb(247, 235, 171);
 }
 .editor {
   background-color: white;

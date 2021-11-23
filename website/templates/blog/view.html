@@ -29,7 +29,7 @@
               <h5 class="card-title">{{ recent_post.title }}</h5>
               <p class="card-text">
                   {{ recent_post.slug }}
-                <a href="{{ url_for('blogs.view_post', id=recent_post.id) }}">click</a>
+                <a href="{{ url_for('blogs.view_post', slug=recent_post.slug) }}">click</a>
               </p>
             </div>
           </div>

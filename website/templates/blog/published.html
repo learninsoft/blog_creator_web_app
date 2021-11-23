@@ -33,7 +33,7 @@
         <div class="button">
           <div class="view">
               {% if blog %}
-              <a href="{{ url_for('blogs.view_post', id=blog['id']) }}">
+              <a href="{{ url_for('blogs.view_post', slug=blog['slug']) }}">
             <button class="btn btn-warning">view blog</button>
               </a>
               {% endif %}
