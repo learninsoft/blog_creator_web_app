@@ -1,49 +1,55 @@
-{% extends 'base/base.html' %}
-{% block head_block %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/publish.css') }}">
-    <script src="{{ url_for('static', filename='js/publish.js') }}"></script>
-{% endblock %}
-{% block content %}
-    <center>
-      <div class="body">
-        <div class="container-fluid">
-          <div class="publish">
-            <br /><br />
-              {% if blog %}
-            <span id="publish"></span> {{ blog['title'] }} published successfully!
-              {% endif %}
-          </div>
-          <br /><br />
-          <button
-            type="button"
-            onclick="myFunction()"
-            onmouseout="outFunc()"
-            id="myTooltip"
-            class="btn btn-secondary"
-          >
-            Copy to clipboard
-          </button>
-            {% if blog %}
-          <br /><br /><input class="form-control" type="text" id="myInput" value="{{ blog['slug'] }}"/>
-            {% endif %}
-        </div>
+{% extends 'base/base.html' %} {% block head_block %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/publish.css') }}"
+/>
+<script src="{{ url_for('static', filename='js/publish.js') }}"></script>
+{% endblock %} {% block content %}
 
+<div class="body">
+  <div class="container-fluid">
+    <div class="grid">
+      <div class="publish">
         <br /><br />
-
-        <div class="button">
-          <div class="view">
-              {% if blog %}
-              <a href="{{ url_for('blogs.view_post', slug=blog['slug']) }}">
-            <button class="btn btn-warning">view blog</button>
-              </a>
-              {% endif %}
-          </div>
-          <div class="create">
-              <a href="{{ url_for('blogs.create_post') }}">
-            <button class="btn btn-danger">create one</button>
-              </a>
-          </div>
-        </div>
+        {% if blog %} {{ blog['title'] }} published successfully! {% endif %}
       </div>
-    </center>
+      <br /><br />
+      <button
+        type="button"
+        onclick="myFunction()"
+        onmouseout="outFunc()"
+        id="myTooltip"
+        class="btn btn-secondary"
+      >
+        Copy to clipboard
+      </button>
+      {% if blog %}
+      <br /><br /><input
+        class="form-control"
+        type="text"
+        id="myInput"
+        value="{{ blog['slug'] }}"
+      />
+      {% endif %}
+    </div>
+
+    <br /><br />
+
+    <div class="button">
+      <div class="view">
+        {% if blog %}
+        <a href="{{ url_for('blogs.view_post', slug=blog['slug']) }}">
+          <button class="btn btn-warning">view blog</button>
+        </a>
+        {% endif %}
+      </div>
+      <div class="create">
+        <a href="{{ url_for('blogs.create_post') }}">
+          <button class="btn btn-danger">create one</button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock %}

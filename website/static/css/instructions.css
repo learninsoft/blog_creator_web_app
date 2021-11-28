@@ -1,11 +1,21 @@
 .info {
-  height: 100vh;
+  min-height: 100vh;
+  background: rgb(148, 213, 233);
+  background: radial-gradient(
+    circle,
+    rgba(148, 213, 233, 0.3512931034482759) 0%,
+    rgba(174, 238, 235, 1) 100%
+  );
 }
 .down1 {
   display: flex;
 }
-.ckbx {
+.check {
   padding: 10px;
+}
+.submit {
+  display: grid;
+  place-items: center;
 }
 footer {
   background-color: rgb(247, 243, 243);
