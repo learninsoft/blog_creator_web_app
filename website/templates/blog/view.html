@@ -74,3 +74,11 @@
   </div>
 </div>
 {% endblock %}
+
+{% block navbar_links %}
+<li class="nav-item">
+  <a class="nav-link" href="{{ url_for('blogs.create_post') }}"
+    >Create Blog</a
+  >
+</li>
+{% endblock %}
