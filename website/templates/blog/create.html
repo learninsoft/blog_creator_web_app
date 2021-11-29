@@ -1,8 +1,6 @@
 {% extends 'base/base.html' %}
 {% block head_block %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/create.css') }}">
-
-    <!-- Include the Quill library -->
     <link
       href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
       rel="stylesheet"
@@ -12,17 +10,18 @@
 {% endblock %}
 {% block content %}
 {#<form method="post">#}
+  {#create page it has some inptu text fields and a editor#}
     <div class="body"><br>
       <div class="container-fluid">
         <div class="row">
           <div class="col-12 col-sm-6 col-md-6">
               <div class="form-group">
                 <label for="title">Enter your Title</label>
-                <input type="text" class="form-control" id="title" name="title"/>
+                <input type="text" class="form-control" id="title" name="title" placeholder="Enter your Title" />
               </div>
               <div class="form-group">
                 <label for="category">category</label>
-                <input type="text" class="form-control" id="category" name="category"/>
+                <input type="text" class="form-control" id="category" name="category" placeholder="#category"/>
               </div>
 {#            </form>#}
           </div>
@@ -34,11 +33,11 @@
             <p><br /></p>
           </div>
         </div>
-
         <div class="form-group">
           <label for="ref">Reference</label>
           <textarea class="form-control" id="ref" rows="1" name="references"></textarea>
         </div>
+        {#toggle for private post of blog#}
         <div class="toggle">
           <p><strong> INDEX off/on</strong></p>
           <label class="switch">
@@ -47,18 +46,21 @@
           </label>
         </div>
         <div>
+          {#link genrator for blogs with auto and manual#}
           <label for="">Generate Link</label>
-          <select id="type" name="slug_options" onchange="generate_link(this.value)">
-{#            <option selected></option>#}
-            <option value="manual">manual</option>
-            <option value="auto">auto</option>
+          <select id="type" name="slug_options" onchange="hide_visible().generate_link(this.value)">
+            <option value="1">manual</option>
+            <option value="2">auto</option>
           </select>
+          <div id="input">
           <input type="text" class="form-control" name="slug" id="slug" oninput="slug_changed(this.value)"/>
         </div>
-        <br />
-        <button type="submit" class="btn btn-outline-secondary" onclick="submitForm()">create</button>
       </div>
-    </div>
+        <br />
+        {#create button#}
+        <button type="submit" class="btn btn-danger" onclick="submitForm()">create</button>
+      </div><br>
+    </div> 
 {#    </form>#}
 <!-- Include the Quill library -->
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
@@ -80,18 +82,38 @@
 
         }
 
+        function hide_visible() {
+        var place = document.getElementById("type");
+        if (place.value == 2) {
+          document.getElementById("input").style.visibility = "hidden";
+        } else {
+          document.getElementById("input").style.visibility = "visible";
+        }
+      }
+
         function slug_changed(value) {
             console.log("value of slug: "+value)
 
         }
 
-        function validate_inputs(){
-            body = document.getElementById('editor').innerHTML
-            title = document.getElementById('title').value
-            slug = document.getElementById('slug').value
-            category = document.getElementById('category').value
-        {#    TODO: Validate all the inputs entered in the form. if incorrect, popup the message in this function#}
-        }
+        function validate_inputs()
+        {
+          var edit = document.getElementById('editor').innerHTML
+          var titlev = document.getElementById('title').value 
+          if(titlev.length<3 || title.length>25)
+            {
+            alert("min of 3 and max of 25 character for title");
+          }
+          var slugv= document.getElementById('slug').value 
+          if(slugv.length>30){
+            alert("max of 30 character for link");         
+          }
+          var categoryv= document.getElementById('category').value
+          if(categoryv.length<3 || category.length>30){
+            alert("min of 3 and max of 30 character for category");
+          }
+        }  
+    
 
         function submitForm(){
             validate_inputs()
