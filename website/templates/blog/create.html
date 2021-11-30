@@ -98,25 +98,33 @@
 
         function validate_inputs()
         {
+            var is_valid = true
           var edit = document.getElementById('editor').innerHTML
           var titlev = document.getElementById('title').value 
           if(titlev.length<3 || title.length>25)
             {
             alert("min of 3 and max of 25 character for title");
+            is_valid = false
           }
           var slugv= document.getElementById('slug').value 
           if(slugv.length>30){
-            alert("max of 30 character for link");         
+            alert("max of 30 character for link");
+            is_valid = false
           }
           var categoryv= document.getElementById('category').value
           if(categoryv.length<3 || category.length>30){
             alert("min of 3 and max of 30 character for category");
+            is_valid = false
           }
+          return is_valid
         }  
     
 
         function submitForm(){
-            validate_inputs()
+            if (!validate_inputs()){
+                console.log("No valid inputs provided.")
+                return null
+            }
             console.log("Button clicked.")
             body = document.getElementById('editor').innerHTML
             title = document.getElementById('title').value
