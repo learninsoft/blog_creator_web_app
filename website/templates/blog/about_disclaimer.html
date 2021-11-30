@@ -1,32 +1,35 @@
 {% extends 'base/base.html' %}
 {% block content %}
     {% if about %}
-    <article>
-      <div class="about">
-        <div class="container-fluid">
-          <h3 class="text-center">About us</h3>
-          <div class="jumbotron">
-            Developed this platform, where any user can share the information, and share it with others.
-              There is no need to provide personal details, before proceeding to create and publish the blog post, unlike any other sites.
-          </div>
-        </div>
-      </div>
-    </article>
+        <article>
+            <div class="about">
+                <div class="container-fluid">
+                    <h3 class="text-center">About us</h3>
+                    <div class="jumbotron">
+                        Developed this platform, where any user can share the information, and share it with others.
+                        There is no need to provide personal details, before proceeding to create and publish the blog
+                        post, unlike any other sites.
+                    </div>
+                </div>
+            </div>
+        </article>
     {% endif %}
     {% if disclaimer %}
-    <article>
-      <div class="about">
-        <div class="container-fluid">
-          <h3 class="text-center">Disclaimer</h3>
-          <div class="jumbotron">
-            The owner of this site, has not verified the posts posted by users, for their factuality. Although the team,
-              has managed well, to provide the instructions before creating the post.
+        <article>
+            <div class="about">
+                <div class="container-fluid">
+                    <h3 class="text-center">Disclaimer</h3>
+                    <div class="jumbotron">
+                        The owner of this site, has not verified the posts posted by users, for their factuality.
+                        Although the team,
+                        has managed well, to provide the instructions before creating the post.
 
-              There is no need to provide personal details, before proceeding to create and publish the blog post,
-              unlike any other sites.
-          </div>
-        </div>
-      </div>
-    </article>
-    {% endif %} 
+                        There is no need to provide personal details, before proceeding to create and publish the blog
+                        post,
+                        unlike any other sites.
+                    </div>
+                </div>
+            </div>
+        </article>
+    {% endif %}
 {% endblock %}

@@ -2,10 +2,8 @@ import os
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-# from flask_migrate import Migrate
 
 from website.config import Config
-
 
 db = SQLAlchemy()
 
@@ -21,15 +19,11 @@ def create_site():
     app.register_blueprint(views.base, url_prefix='/')
     app.register_blueprint(err_views.err_views)
 
-    # from .applications.blog.models import Post
-
     if Config.DB_TYPE in 'sqlite':
         app.config['SQLALCHEMY_DATABASE_URI'] = Config.SQLALCHEMY_DATABASE_URI
         app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = Config.SQLALCHEMY_TRACK_MODIFICATIONS
         db.init_app(app)
         create_database(app)
-    # db.create_all(app=app)
-    # migrate = Migrate(app, db)
 
     return app
 

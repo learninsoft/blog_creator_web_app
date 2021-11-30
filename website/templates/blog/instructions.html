@@ -1,69 +1,70 @@
 {% extends 'base/base.html' %} {% block head_block %}
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='css/instructions.css') }}"
-/>
-<script src="{{ url_for('static', filename='js/instructions.js') }}"></script>
+    <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/instructions.css') }}"
+    />
+    <script src="{{ url_for('static', filename='js/instructions.js') }}"></script>
 {% endblock %} {% block content %} {#instructions#}
-<div class="info" id="">
-  <br />
-    <h3 class="text-center">Instructions to create the post: </h3>
-  <div class="container-fluid">
-    <ul>
-      <li>
-        Plan your post by choosing a topic, and checking facts.
-      </li>
-      <br />
-      <li>
-        Prepare a headline [title] that is both informative and attractive to capture the readers attention.
-      </li>
-      <br />
-      <li>
-        Only create, and publish on this site, if the information is helpful to other readers.
-      </li>
-      <br />
-      <li>
-        Once the post is created, you will be directed to the published page, where you'll see the link to the post.
-          Don't forget to save this post link with you.
-      </li>
-      <br />
-      <li>
-        You can also create the private posts, by turning off the index option.
-          This means, the post can only be found when you've the post link.
-      </li>
-      <br />
-      <li>
-        By clicking I agree and create, have accepted all the instructions mentioned above.
-      </li>
-    </ul>
-    <form
-      onsubmit="return validateForm(this)"
-      action="{{ url_for('blogs.create_post') }}"
-    >
-      {#agree checkbox#}
-      <div class="down1">
-        <div class="check">
-          <input type="checkbox" id="agree" />
-          <label for="agree">I agree</label>
-          <label style="visibility: hidden; color: red" id="agree_chk_error">
-            Can't proceed as you didn't agree!
-          </label>
+    <div class="info" id="">
+        <br/>
+        <h3 class="text-center">Instructions to create the post: </h3>
+        <div class="container-fluid">
+            <ul>
+                <li>
+                    Plan your post by choosing a topic, and checking facts.
+                </li>
+                <br/>
+                <li>
+                    Prepare a headline [title] that is both informative and attractive to capture the readers attention.
+                </li>
+                <br/>
+                <li>
+                    Only create, and publish on this site, if the information is helpful to other readers.
+                </li>
+                <br/>
+                <li>
+                    Once the post is created, you will be directed to the published page, where you'll see the link to
+                    the post.
+                    Don't forget to save this post link with you.
+                </li>
+                <br/>
+                <li>
+                    You can also create the private posts, by turning off the index option.
+                    This means, the post can only be found when you've the post link.
+                </li>
+                <br/>
+                <li>
+                    By clicking I agree and create, have accepted all the instructions mentioned above.
+                </li>
+            </ul>
+            <form
+                    onsubmit="return validateForm(this)"
+                    action="{{ url_for('blogs.create_post') }}"
+            >
+                {#agree checkbox#}
+                <div class="down1">
+                    <div class="check">
+                        <input type="checkbox" id="agree"/>
+                        <label for="agree">I agree</label>
+                        <label style="visibility: hidden; color: red" id="agree_chk_error">
+                            Can't proceed as you didn't agree!
+                        </label>
+                    </div>
+                    {#create and back buttons#}
+                    <div class="create">
+                        <button type="submit" class="btn btn-danger">create</button>
+                    </div>
+                </div>
+            </form>
+            <div class="back">
+                <a href="{{ url_for('blogs.home_view') }}">
+                    <button class="btn btn-outline-info">
+                        <i class="fas fa-backward"></i> Back
+                    </button>
+                </a>
+            </div>
+            <br/>
         </div>
-        {#create and back buttons#}
-        <div class="create">
-          <button type="submit" class="btn btn-danger">create</button>
-        </div>
-      </div>
-    </form>
-    <div class="back">
-      <a href="{{ url_for('blogs.home_view') }}">
-        <button class="btn btn-outline-info">
-          <i class="fas fa-backward"></i> Back
-        </button>
-      </a>
     </div>
-    <br />
-  </div>
-</div>
 
 {% endblock %}

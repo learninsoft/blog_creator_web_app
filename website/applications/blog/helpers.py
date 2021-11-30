@@ -5,7 +5,6 @@ from .models import Post
 
 from website.applications.utils.logger import Logger
 
-
 log_obj = Logger(name=__name__).logger
 
 

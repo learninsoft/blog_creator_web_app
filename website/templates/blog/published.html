@@ -1,57 +1,57 @@
 {% extends 'base/base.html' %} {% block head_block %}
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='css/publish.css') }}"
-/>
-<script src="{{ url_for('static', filename='js/publish.js') }}"></script>
+    <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/publish.css') }}"
+    />
+    <script src="{{ url_for('static', filename='js/publish.js') }}"></script>
 {% endblock %} {% block content %} {#published page#}
-<div class="body">
-  <div class="container-fluid">
-    <div class="grid">
-      {#blog title name#}
-      <div class="publish">
-        <br /><br />
-        {% if blog %} {{ blog['title'] }} published successfully! {% endif %}
-      </div>
-      <br /><br />
-      {#copy button for link#}
-      <button
-        type="button"
-        onclick="myFunction()"
-        onmouseout="outFunc()"
-        id="myTooltip"
-        class="btn btn-secondary"
-      >
-        Copy to clipboard
-      </button>
-      {% if blog %}
-      <br /><br /><input
-            disabled
-        class="form-control"
-        type="text"
-        id="myInput"
-        value="{{ blog['slug'] }}"
-      />
-      {% endif %}
-    </div>
+    <div class="body">
+        <div class="container-fluid">
+            <div class="grid">
+                {#blog title name#}
+                <div class="publish">
+                    <br/><br/>
+                    {% if blog %} {{ blog['title'] }} published successfully! {% endif %}
+                </div>
+                <br/><br/>
+                {#copy button for link#}
+                <button
+                        type="button"
+                        onclick="myFunction()"
+                        onmouseout="outFunc()"
+                        id="myTooltip"
+                        class="btn btn-secondary"
+                >
+                    Copy to clipboard
+                </button>
+                {% if blog %}
+                    <br/><br/><input
+                        disabled
+                        class="form-control"
+                        type="text"
+                        id="myInput"
+                        value="{{ blog['slug'] }}"
+                />
+                {% endif %}
+            </div>
 
-    <br /><br />
-    {#view blog and create button#}
-    <div class="button">
-      <div class="view">
-        {% if blog %}
-        <a href="{{ url_for('blogs.view_post', slug=blog['slug']) }}">
-          <button class="btn btn-outline-dark">view blog</button>
-        </a>
-        {% endif %}
-      </div>
-      <div class="create">
-        <a href="{{ url_for('blogs.create_post') }}">
-          <button class="btn btn-outline-danger">create one</button>
-        </a>
-      </div>
+            <br/><br/>
+            {#view blog and create button#}
+            <div class="button">
+                <div class="view">
+                    {% if blog %}
+                        <a href="{{ url_for('blogs.view_post', slug=blog['slug']) }}">
+                            <button class="btn btn-outline-dark">view blog</button>
+                        </a>
+                    {% endif %}
+                </div>
+                <div class="create">
+                    <a href="{{ url_for('blogs.create_post') }}">
+                        <button class="btn btn-outline-danger">create one</button>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
 {% endblock %}

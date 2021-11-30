@@ -172,8 +172,6 @@ def view_all_posts():
     posts = {}
     try:
         posts = Post.query.filter(Post.is_active != 0)
-
-        log_obj.info(f"Total retrieved posts: {len(posts)}")
     except Exception:
         log_obj.error("Error occurred in view_all_posts() ", exc_info=True)
     return render_template("blog/all_view.html", posts=posts)
