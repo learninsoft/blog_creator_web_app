@@ -57,7 +57,7 @@ class Post(db.Model):
         """
         if not self.slug or self.slug_type in ('auto',):
             log_obj.info("Generating the slug")
-            self.slug = slugify(self.title) + "-" + str(time.time_ns())
+            self.slug = slugify(self.title) + "-" + str(time.time_ns()//1000)
         else:
             log_obj.info("slug entered value to clean slug")
             self.slug = slugify(self.slug)

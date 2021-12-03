@@ -30,7 +30,7 @@
                         class="form-control"
                         type="text"
                         id="myInput"
-                        value="{{ blog['slug'] }}"
+                        value="{{request.host}}{{ url_for('blogs.view_post', slug=blog['slug']) }}"
                 />
                 {% endif %}
             </div>
