@@ -7,9 +7,20 @@ import sqlalchemy
 
 from website import db
 from website.applications.utils.logger import Logger
-from website.applications.blog.helpers import slugify
+# from website.applications.blog.helpers import slugify
 
 log_obj = Logger(name=__name__).logger
+
+
+def slugify(s):
+    """
+    replaces spaces with -
+    :param s: input string
+    :return: slug string with lowercase.
+    """
+    log_obj.info(f"Inside slugify: {s}")
+    pattern = r'[^\w+]'
+    return re.sub(pattern, '-', s).lower()
 
 
 class Post(db.Model):
