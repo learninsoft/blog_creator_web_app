@@ -51,5 +51,5 @@ Linkedin Post: https://www.linkedin.com/feed/update/urn:li:share:687251235109514
 ## Contributors <img src="https://raw.githubusercontent.com/TheDudeThatCode/TheDudeThatCode/master/Assets/Developer.gif" width=35 height=25> 
 - Shashidhar Reddy
 - Shashank Reddy
-- Sai Shruthi
+- Sai Sruthi
 
