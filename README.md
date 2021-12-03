@@ -47,7 +47,8 @@ Execute the application in local system using
 **Note**: Once the system is ready to execute the project, to run the project in the later stages, activate the environment and execute the script. 
 
 
-[comment]: <> (### :book: Please Go through [Documents section]&#40;https://github.com/iNeuron-ai/Pose-with-Action/blob/main/doc/Pose_With_Action_HLD2.docx&#41; for more info.)
+## :book: 
+Please Go through [Documents section]&#40;https://drive.google.com/drive/folders/1miyt7xmpmRLTYOsOpyYbnMULu-YvJo1H?usp=sharing; for more info.)
 
 
 ## Contributors <img src="https://raw.githubusercontent.com/TheDudeThatCode/TheDudeThatCode/master/Assets/Developer.gif" width=35 height=25> 
