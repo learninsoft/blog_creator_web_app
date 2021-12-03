@@ -16,6 +16,8 @@
 - This problem statement is taken from **iNeuron.ai** open internship.  
 - In this project we have used **Python Flask framework** and **HTML,CSS,JS** for web application.
 
+#### Project deployed at (https://learninsoft-blog.herokuapp.com/)
+
 ## :desktop_computer:	Installation
 
 ### :hammer_and_wrench: Requirements
