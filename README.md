@@ -1,12 +1,6 @@
 
 
-[comment]: <> (## :running: :walking: :dancer: Blog.Creator)
-
-[comment]: <> (![pose_with_action]&#40;https://user-images.githubusercontent.com/62059604/99776776-5db0de00-2b37-11eb-97e7-b39f53f2d703.gif&#41;)
-
-[comment]: <> (![Untitled design &#40;4&#41;]&#40;https://user-images.githubusercontent.com/62059604/99800421-5818bf80-2b5a-11eb-83ad-c0fe6a2d48be.png&#41;)
-
-[comment]: <> (![Untitled design &#40;5&#41;]&#40;https://user-images.githubusercontent.com/62059604/99800592-9e6e1e80-2b5a-11eb-8f70-4796dd0ee36a.png&#41;)
+## Blog.Creator
 
 - This repository represents **" Blog Creator Web Application "** which provides the interface for all the users.
 - With the help of this project any user can create and publish their blogs to the real world.
@@ -52,6 +46,7 @@ Execute the application in local system using
 ## :book: 
 Please Go through [Documents section]&#40;https://drive.google.com/drive/folders/1miyt7xmpmRLTYOsOpyYbnMULu-YvJo1H?usp=sharing; for more info.)
 
+Linkedin Post: https://www.linkedin.com/feed/update/urn:li:share:6872512351095144448/
 
 ## Contributors <img src="https://raw.githubusercontent.com/TheDudeThatCode/TheDudeThatCode/master/Assets/Developer.gif" width=35 height=25> 
 - Shashidhar Reddy
